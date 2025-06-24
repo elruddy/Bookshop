@@ -14,7 +14,7 @@ var gBooks = [
     imgUrl: 'twilight.jpg',
   },
   {
-    id: 'bg4J79',
+    id: 'bg4J80',
     title: 'Gone with Wind',
     price: 100,
     imgUrl: 'GonewW.jpg',
@@ -23,4 +23,8 @@ var gBooks = [
 
 function getBooks() {
   return gBooks;
+}
+
+function removeBook(bookId) {
+  gBooks = gBooks.filter((book) => book.id !== bookId);
 }

@@ -8,7 +8,6 @@ function render() {
   var books = getBooks();
 
   for (var book of books) {
-    debugger;
     tableHtml =
       tableHtml +
       `
@@ -18,11 +17,15 @@ function render() {
             <th>
                 <button>Read</button> 
                 <button>Update</button>
-                <button>Delete</button>
+                <button onclick="onRemoveBook('${book.id}')">Delete</button>
             </th>
         </tr>
     `;
   }
 
   insertHtmlByElementId('TableBody', tableHtml);
+}
+function onRemoveBook(bookId) {
+  removeBook(bookId);
+  render();
 }
