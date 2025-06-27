@@ -16,7 +16,7 @@ function renderBook() {
             <td>${book.title}</td>
             <td>${book.price}</td>
             <td>
-                <button>Read</button> 
+                <button onclick="onReadBook ('${book.id}')">Read</button> 
                 <button onclick="onUpdateBook('${book.id}')">Update</button>
                 <button onclick="onRemoveBook('${book.id}')">Delete</button>
             </td>
@@ -42,4 +42,16 @@ function onAddBook() {
   const price = +prompt('What is the price of book to be add?');
   addBook(title, price);
   renderBook();
+}
+
+function onReadBook(bookId) {
+  book = getBookbyId(bookId);
+  const elBookModal = document.querySelector('.book-details');
+  elBookModal.querySelector('h2.title').innerText = book.title;
+  elBookModal.querySelector(' h2.price').innerText =
+    '$' + book.price.toFixed(2);
+  elBookModal.querySelector('p.desc').innerText = book.description;
+  elBookModal.querySelector('div.book-img img').src = book.imgUrl;
+  elBookModal.dataset.bookId = bookId;
+  elBookModal.showModal();
 }

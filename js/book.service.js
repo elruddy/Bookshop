@@ -3,21 +3,24 @@
 var gBooks = [
   {
     id: makeId(),
-    title: 'The adventures of Lori Ipsi',
+    title: 'The Adventures of Tom Sawyer',
     price: 120,
-    imgUrl: 'lori-ipsi.jpg',
+    imgUrl: 'img/tom.jpeg',
+    description: LoremIpsum(30),
   },
   {
     id: makeId(),
     title: 'Twilight',
     price: 70,
-    imgUrl: 'twilight.jpg',
+    imgUrl: 'img/twilight.jpg',
+    description: LoremIpsum(30),
   },
   {
     id: makeId(),
     title: 'Gone with Wind',
     price: 100,
-    imgUrl: 'GonewW.jpg',
+    imgUrl: 'img/GonewW.jpeg',
+    description: LoremIpsum(30),
   },
 ];
 
@@ -25,12 +28,17 @@ function getBooks() {
   return gBooks;
 }
 
+function getBookbyId(bookId) {
+  const book = gBooks.find((book) => book.id === bookId);
+  return book;
+}
+
 function removeBook(bookId) {
   gBooks = gBooks.filter((book) => book.id !== bookId);
 }
 
 function updateBookPrice(bookId, newPrice) {
-  book = gBooks.find((book) => book.id === bookId);
+  const book = getBookbyId(bookId);
   book.price = newPrice;
 }
 
@@ -47,5 +55,6 @@ function _createBook(title, price, imgUrl) {
     imgUrl:
       imgUrl ||
       'https://islandpress.org/sites/default/files/default_book_cover_2015.jpg',
+    description: LoremIpsum(30),
   };
 }
