@@ -8,10 +8,14 @@
     <title>Bookshop</title>
   </head>
   <body onload="onInit()">
-    <main>
-      <div>
-        <button onclick="onAddBook()">Add by Prompts</button>
-      </div>
+   <div class="aboveTable">
+    
+       <button onclick="onAddBook()">Add by Prompts</button>
+  
+      <input placeholder="Search by Title" oninput="onInputFilter(this.value)"></input>
+   </div>
+
+
       <table class="table-container">
         <thead>
           <tr>
@@ -29,17 +33,18 @@
         <form method="dialog">
           <h2 class="title"></h2>
           <h2 class="price"></h2>
-          <p class="desc"></p>
           <div class="book-img">
+            <p class="desc"></p>
             <img src="" />
           </div>
 
           <button class="close">✖</button>
         </form>
       </dialog>
-    </main>
+    
 
     <script src="js/utils.js"></script>
+    <script src="js/storage.service.js"></script>
     <script src="js/book.service.js"></script>
     <script src="js/book.controller.js"></script>
   </body>

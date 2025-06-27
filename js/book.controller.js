@@ -4,11 +4,17 @@ function onInit() {
   renderBook();
 }
 
-function renderBook() {
+function renderBook(filter = '') {
   var tableHtml = '';
-  var books = getBooks();
+  var renderedBooks = getBooks();
 
-  for (var book of books) {
+  if (filter !== '') {
+    renderedBooks = renderedBooks.filter((book) =>
+      book.title.toLowerCase().includes(filter.toLowerCase())
+    );
+  }
+
+  for (var book of renderedBooks) {
     tableHtml =
       tableHtml +
       `
@@ -27,6 +33,7 @@ function renderBook() {
   insertHtmlByElementId('TableBody', tableHtml);
 }
 function onRemoveBook(bookId) {
+  confirm('Are you sure you want to delet this book?');
   removeBook(bookId);
   renderBook();
 }
@@ -54,4 +61,8 @@ function onReadBook(bookId) {
   elBookModal.querySelector('div.book-img img').src = book.imgUrl;
   elBookModal.dataset.bookId = bookId;
   elBookModal.showModal();
+}
+
+function onInputFilter(filterBy) {
+  renderBook(filterBy);
 }

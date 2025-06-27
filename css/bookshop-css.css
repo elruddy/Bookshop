@@ -7,12 +7,16 @@
 }
 
 .table-container button {
-    background: #c4d3f6;
+    background: white;
    width: 30%;
     font-family: 'Courier New', Courier, monospace;
     border: 0px;
-
 }
+
+button:hover {
+    cursor: pointer;
+}
+
 .table-container thead {
     background-color: white;
 }
@@ -21,12 +25,14 @@
 .hide {
     display: none;
 }
-
+.aboveTable input{ width: 200px;
+  
+}
 
 .book-details {
     background-color: white;
     font-family: 'Courier New', Courier, monospace;
-    height:  550px;
+    height:  300px;
     width: 500px;
  
 }
@@ -34,8 +40,14 @@
     text-align: center;
 }
 
-div.book-img img {
+div.book-img {
+    display: flex;
+    flex-direction: row;
+}
 
+div.book-img img {
+    height: 150px;
+    width: 100px;
 }
 
 .close {
