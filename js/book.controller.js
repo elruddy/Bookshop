@@ -66,3 +66,9 @@ function onReadBook(bookId) {
 function onInputFilter(filterBy) {
   renderBook(filterBy);
 }
+
+function onClear() {
+  const elFilter = document.getElementById('inputFilter');
+  elFilter.value = '';
+  renderBook();
+}
