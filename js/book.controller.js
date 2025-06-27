@@ -1,4 +1,5 @@
 'use-strict';
+
 function onInit() {
   renderBook();
 }
@@ -31,7 +32,14 @@ function onRemoveBook(bookId) {
 }
 
 function onUpdateBook(bookId) {
-  var price = +prompt('What is tde new price?');
+  var price = +prompt('What is the new price?');
   updateBookPrice(bookId, price);
+  renderBook();
+}
+
+function onAddBook() {
+  const title = prompt('What is the title of book to be add?');
+  const price = +prompt('What is the price of book to be add?');
+  addBook(title, price);
   renderBook();
 }
