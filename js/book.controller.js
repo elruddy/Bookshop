@@ -1,9 +1,9 @@
 'use-strict';
 function onInit() {
-  render();
+  renderBook();
 }
 
-function render() {
+function renderBook() {
   var tableHtml = '';
   var books = getBooks();
 
@@ -12,13 +12,13 @@ function render() {
       tableHtml +
       `
         <tr>
-            <th>${book.title}</th>
-            <th>${book.price}</th>
-            <th>
+            <td>${book.title}</td>
+            <td>${book.price}</td>
+            <td>
                 <button>Read</button> 
-                <button>Update</button>
+                <button onclick="onUpdateBook('${book.id}')">Update</button>
                 <button onclick="onRemoveBook('${book.id}')">Delete</button>
-            </th>
+            </td>
         </tr>
     `;
   }
@@ -27,5 +27,11 @@ function render() {
 }
 function onRemoveBook(bookId) {
   removeBook(bookId);
-  render();
+  renderBook();
+}
+
+function onUpdateBook(bookId) {
+  var price = +prompt('What is tde new price?');
+  updateBookPrice(bookId, price);
+  renderBook();
 }

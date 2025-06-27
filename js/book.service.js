@@ -28,3 +28,8 @@ function getBooks() {
 function removeBook(bookId) {
   gBooks = gBooks.filter((book) => book.id !== bookId);
 }
+
+function updateBookPrice(bookId, newPrice) {
+  book = gBooks.find((book) => book.id === bookId);
+  book.price = newPrice;
+}
