@@ -1,9 +1,12 @@
+body{
+    font-family: 'Courier New', Courier, monospace;
+    
+}
 .table-container{
     margin: 50px auto;
     width: 50vw;
     min-height: 30vh;
     background: #c4d3f6;
-    font-family: 'Courier New', Courier, monospace;
 }
 
 .table-container button {
@@ -25,8 +28,18 @@ button:hover {
 .hide {
     display: none;
 }
-.aboveTable input{ width: 200px;
-  
+
+.aboveTable button{
+font-family: 'Courier New', Courier, monospace;
+font-weight: bold;
+ background: #c4d3f6;
+ border: 0px;
+}
+
+.aboveTable input{ 
+    width: 200px;
+    font-family: 'Courier New', Courier, monospace;
+
 }
 
 .book-details {

@@ -20,7 +20,7 @@ function renderBook(filter = '') {
       `
         <tr>
             <td>${book.title}</td>
-            <td>${book.price}</td>
+            <td>${book.price}$</td>
             <td>
                 <button onclick="onReadBook ('${book.id}')">Read</button> 
                 <button onclick="onUpdateBook('${book.id}')">Update</button>
@@ -36,12 +36,14 @@ function onRemoveBook(bookId) {
   confirm('Are you sure you want to delet this book?');
   removeBook(bookId);
   renderBook();
+  showMsg('You successfully removed the book');
 }
 
 function onUpdateBook(bookId) {
   var price = +prompt('What is the new price?');
   updateBookPrice(bookId, price);
   renderBook();
+  showMsg('You successfully updated the book');
 }
 
 function onAddBook() {
@@ -49,6 +51,7 @@ function onAddBook() {
   const price = +prompt('What is the price of book to be add?');
   addBook(title, price);
   renderBook();
+  showMsg('You successfully added a book');
 }
 
 function onReadBook(bookId) {
@@ -71,4 +74,14 @@ function onClear() {
   const elFilter = document.getElementById('inputFilter');
   elFilter.value = '';
   renderBook();
+}
+
+function showMsg(msg) {
+  const elMsg = document.querySelector('.msg-box');
+  elMsg.innerText = msg;
+  elMsg.style.display = 'block';
+
+  setTimeout(() => {
+    elMsg.style.display = 'none';
+  }, 2000);
 }

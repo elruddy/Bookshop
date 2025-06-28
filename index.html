@@ -9,11 +9,11 @@
   </head>
   <body onload="onInit()">
    <div class="aboveTable">
-    
-       <button onclick="onAddBook()">Add by Prompts</button>
-  
-      <input id='inputFilter' placeholder="Search by Title" oninput="onInputFilter(this.value)"></input>
-      <button onclick="onClear()"> Clear </button>
+     <label> Filter:</label>
+     <input id='inputFilter' placeholder="Search by Title" oninput="onInputFilter(this.value)"> </input>
+     <button onclick="onClear()"> Clear filter </button>
+     
+        <button onclick="onAddBook()">Add by Prompts</button>
    </div>
 
 
@@ -43,6 +43,7 @@
         </form>
       </dialog>
     
+      <dialog class="msg-box"> </dialog>
 
     <script src="js/utils.js"></script>
     <script src="js/storage.service.js"></script>

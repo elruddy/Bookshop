@@ -20,6 +20,7 @@ function removeBook(bookId) {
 function updateBookPrice(bookId, newPrice) {
   const book = getBookbyId(bookId);
   book.price = newPrice;
+
   _saveBooks();
 }
 
