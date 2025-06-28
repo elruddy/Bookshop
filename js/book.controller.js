@@ -30,8 +30,10 @@ function renderBook(filter = '') {
     `;
   }
 
+  renderStats();
   insertHtmlByElementId('TableBody', tableHtml);
 }
+
 function onRemoveBook(bookId) {
   confirm('Are you sure you want to delet this book?');
   removeBook(bookId);
@@ -41,6 +43,12 @@ function onRemoveBook(bookId) {
 
 function onUpdateBook(bookId) {
   var price = +prompt('What is the new price?');
+
+  if (Number.isNaN(price)) {
+    alert('Price must be a number');
+    return;
+  }
+
   updateBookPrice(bookId, price);
   renderBook();
   showMsg('You successfully updated the book');
@@ -48,7 +56,19 @@ function onUpdateBook(bookId) {
 
 function onAddBook() {
   const title = prompt('What is the title of book to be add?');
+
+  if (!title) {
+    alert("Title of a book can't be empty");
+    return;
+  }
+
   const price = +prompt('What is the price of book to be add?');
+
+  if (Number.isNaN(price)) {
+    alert('Price must be a number');
+    return;
+  }
+
   addBook(title, price);
   renderBook();
   showMsg('You successfully added a book');
@@ -84,4 +104,11 @@ function showMsg(msg) {
   setTimeout(() => {
     elMsg.style.display = 'none';
   }, 2000);
+}
+function renderStats() {
+  const myStats = getStats();
+  const elFooter = document.querySelector('.stats');
+  elFooter.querySelector('.expensive-count').innerText = myStats.expensive;
+  elFooter.querySelector('.avg-count').innerText = myStats.average;
+  elFooter.querySelector('.cheap-count').innerText = myStats.cheap;
 }

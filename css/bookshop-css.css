@@ -1,23 +1,35 @@
 body{
     font-family: 'Courier New', Courier, monospace;
-    
+    margin: 0;
+    background-size:contain
+}
+
+main{
+    margin-top: 50px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 .table-container{
-    margin: 50px auto;
+    margin-top: 8px;
     width: 50vw;
     min-height: 30vh;
-    background: #c4d3f6;
+    background: hsl(147, 50%, 47%);
 }
 
 .table-container button {
     background: white;
-   width: 30%;
+    width: 30%;
     font-family: 'Courier New', Courier, monospace;
     border: 0px;
 }
 
 button:hover {
     cursor: pointer;
+}
+
+button {
+    border-radius: 8px;
 }
 
 .table-container thead {
@@ -29,11 +41,16 @@ button:hover {
     display: none;
 }
 
-.aboveTable button{
-font-family: 'Courier New', Courier, monospace;
-font-weight: bold;
- background: #c4d3f6;
- border: 0px;
+.aboveTable {
+    background-color: hsla(0, 100%, 100%, 0.9);
+     width: 50vw;
+}
+
+.aboveTable button {
+    font-family: 'Courier New', Courier, monospace;
+    font-weight: bold;
+    background: hsl(147, 50%, 47%);
+    border: 0px;
 }
 
 .aboveTable input{ 
@@ -47,8 +64,8 @@ font-weight: bold;
     font-family: 'Courier New', Courier, monospace;
     height:  300px;
     width: 500px;
- 
 }
+
 .book-details h2{
     text-align: center;
 }
@@ -64,8 +81,17 @@ div.book-img img {
 }
 
 .close {
-     position: absolute;
+    position: absolute;
     right: 20px;
     top: 10px;
+}
 
+.stats{
+    position: absolute;
+    width: 100%;
+    bottom: 0;
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    background-color: hsl(300, 76%, 72%)
 }

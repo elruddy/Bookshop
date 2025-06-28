@@ -7,7 +7,8 @@
     <link rel="stylesheet" href="css/bookshop-css.css" />
     <title>Bookshop</title>
   </head>
-  <body onload="onInit()">
+  <body onload="onInit()"  style="background-image: url('img/books_background.jpg');">
+    <main>
    <div class="aboveTable">
      <label> Filter:</label>
      <input id='inputFilter' placeholder="Search by Title" oninput="onInputFilter(this.value)"> </input>
@@ -29,7 +30,7 @@
       </table>
 
       <div class="cards-container hide">bjhvfwvf</div>
-
+ </main>
       <dialog class="book-details">
         <form method="dialog">
           <h2 class="title"></h2>
@@ -49,5 +50,10 @@
     <script src="js/storage.service.js"></script>
     <script src="js/book.service.js"></script>
     <script src="js/book.controller.js"></script>
+    <footer class="stats"> 
+      <span class="expensive-count"></span> expensive books
+      <span class="avg-count"></span> average price books
+      <span class="cheap-count"></span> cheap books
+    </footer>
   </body>
 </html>

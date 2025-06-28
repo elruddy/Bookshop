@@ -30,6 +30,19 @@ function addBook(title, price) {
   _saveBooks();
 }
 
+function getStats() {
+  return gBooks.reduce(
+    (returnedObject, book) => {
+      if (book.price >= 200) returnedObject.expensive++;
+      else if (book.price >= 80) returnedObject.average++;
+      else returnedObject.cheap++;
+
+      return returnedObject;
+    },
+    { expensive: 0, average: 0, cheap: 0 }
+  );
+}
+
 function _createBook(title, price, imgUrl) {
   return {
     id: makeId(),
