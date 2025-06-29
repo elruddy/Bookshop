@@ -8,16 +8,16 @@
     <title>Bookshop</title>
   </head>
   <body onload="onInit()"  style="background-image: url('img/books_background.jpg');">
+
     <main>
-   <div class="aboveTable">
-     <label> Filter:</label>
-     <input id='inputFilter' placeholder="Search by Title" oninput="onInputFilter(this.value)"> </input>
-     <button onclick="onClear()"> Clear filter </button>
-     
-        <button onclick="onAddBook()">Add by Prompts</button>
-   </div>
-
-
+      <div class="aboveTable">
+        <label> Filter:</label>
+        <input id='inputFilter' placeholder="Search by Title" oninput="onInputFilter(this.value)"> </input>
+        <button onclick="onClear()"> Clear filter </button>
+        
+            <button onclick="onAddBook()">Add by Prompts</button>
+            <button onclick="onGetBookModal()">Add by Modal</button>
+      </div>
       <table class="table-container">
         <thead>
           <tr>
@@ -28,9 +28,10 @@
         </thead>
         <tbody id="TableBody"></tbody>
       </table>
-
       <div class="cards-container hide">bjhvfwvf</div>
- </main>
+    </main>
+
+
       <dialog class="book-details">
         <form method="dialog">
           <h2 class="title"></h2>
@@ -44,16 +45,62 @@
         </form>
       </dialog>
     
-      <dialog class="msg-box"> </dialog>
+      <dialog class="msg-box"></dialog>
+
+       <dialog class="bookAddModal"> 
+        <h3>Add a book</h3>
+        <form method="dialog" onsubmit="onAddBookByModal(this)">
+           <div>
+          <label>Title</label>:
+          <input 
+            name="book-title"
+            type="text"
+            placeholder="Book Title"
+            autocomplete="on"
+          />
+        </div>
+
+        <div>
+          <label>Price</label>:
+          <input
+            name="book-price"
+            type="number"
+            step=".01"
+            placeholder="Book Price"
+            autocomplete="off"
+          />
+        </div>
+
+        <div>
+          <label>Image URL</label>:
+          <input
+            name="book-image"
+            type="text"
+            placeholder="http(s)://.............jpeg"
+            autocomplete="off"
+          />
+        </div>
+
+        <button> Add Book</button>
+         <button type="button" class="close" onclick="onCloseBookModal()">
+          ✖
+        </button>
+
+
+        </form>
+
+       </dialog>
 
     <script src="js/utils.js"></script>
     <script src="js/storage.service.js"></script>
     <script src="js/book.service.js"></script>
     <script src="js/book.controller.js"></script>
+
     <footer class="stats"> 
       <span class="expensive-count"></span> expensive books
       <span class="avg-count"></span> average price books
       <span class="cheap-count"></span> cheap books
     </footer>
+
   </body>
 </html>

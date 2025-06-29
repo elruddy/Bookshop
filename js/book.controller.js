@@ -30,6 +30,7 @@ function renderBook(filter = '') {
     `;
   }
 
+  if (!tableHtml) tableHtml = 'No books found...';
   renderStats();
   insertHtmlByElementId('TableBody', tableHtml);
 }
@@ -111,4 +112,29 @@ function renderStats() {
   elFooter.querySelector('.expensive-count').innerText = myStats.expensive;
   elFooter.querySelector('.avg-count').innerText = myStats.average;
   elFooter.querySelector('.cheap-count').innerText = myStats.cheap;
+}
+
+function onGetBookModal() {
+  const elModal = document.querySelector('.bookAddModal');
+  console.log(elModal);
+  elModal.showModal();
+}
+
+function onAddBookByModal(elForm) {
+  const formTitle = elForm.querySelector('[name="book-title"]');
+  const formPrice = elForm.querySelector('[name="book-price"]');
+  const formImgInput = elForm.querySelector('[name="book-img"]');
+
+  if (!formTitle.value || !formPrice.value)
+    return alert('Please make sure data are filled correctly!');
+
+  addBook(formTitle.value, +formPrice.value, formImgInput?.value);
+  renderBook();
+  showMsg('Congratulations your book repertoire grew');
+  elForm.reset();
+}
+
+function onCloseBookModal() {
+  const elModal = document.querySelector('.bookAddModal');
+  elModal.close();
 }

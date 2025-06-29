@@ -24,8 +24,8 @@ function updateBookPrice(bookId, newPrice) {
   _saveBooks();
 }
 
-function addBook(title, price) {
-  const newBook = _createBook(title, price);
+function addBook(title, price, img) {
+  const newBook = _createBook(title, price, img);
   gBooks.unshift(newBook);
   _saveBooks();
 }

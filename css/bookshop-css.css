@@ -13,7 +13,6 @@ main{
 .table-container{
     margin-top: 8px;
     width: 50vw;
-    min-height: 30vh;
     background: hsl(147, 50%, 47%);
 }
 
@@ -44,6 +43,7 @@ button {
 .aboveTable {
     background-color: hsla(0, 100%, 100%, 0.9);
      width: 50vw;
+     font-weight: bold;
 }
 
 .aboveTable button {
@@ -60,10 +60,13 @@ button {
 }
 
 .book-details {
-    background-color: white;
+    background-color:  hsla(147, 85%, 72%, 0.54);
     font-family: 'Courier New', Courier, monospace;
+    color: black;
     height:  300px;
     width: 500px;
+    border:  0px
+   
 }
 
 .book-details h2{
@@ -80,10 +83,42 @@ div.book-img img {
     width: 100px;
 }
 
+.msg-box {
+    
+    position: absolute;
+    bottom: 50%;
+    background-color:  hsla(147, 85%, 72%, 0.54);
+    color: black;
+    border: 0;
+}
+
+.bookAddModal{
+    background-color:  hsla(147, 85%, 72%, 0.54);
+    font-family: 'Courier New', Courier, monospace;
+    color: black;
+    height:  250px;
+    width:200px ;
+}
+
+.bookAddModal button{
+    font-family: 'Courier New', Courier, monospace;
+    font-weight: bold;
+    background: hsl(147, 50%, 47%);
+    border: 0px;
+    margin-top: 20px;
+    justify-self: center
+}
+
+.bookAddModal input {
+        font-family: 'Courier New', Courier, monospace;
+border: 0;
+}
+
 .close {
     position: absolute;
     right: 20px;
     top: 10px;
+    border: 0px;
 }
 
 .stats{
@@ -93,5 +128,7 @@ div.book-img img {
     display: flex;
     justify-content: center;
     gap: 20px;
-    background-color: hsl(300, 76%, 72%)
+    background-color: hsl(300, 76%, 72%);
+    color: white;
+    font-weight: bold;
 }
