@@ -21,6 +21,7 @@ function renderBook(filter = '') {
         <tr>
             <td>${book.title}</td>
             <td>${book.price}$</td>
+            <td>${book.rating}</td>
             <td>
                 <button onclick="onReadBook ('${book.id}')">Read</button> 
                 <button onclick="onUpdateBook('${book.id}')">Update</button>
@@ -70,7 +71,13 @@ function onAddBook() {
     return;
   }
 
-  addBook(title, price);
+  const rating = +prompt('How much did you enjoyed book from 1 to 5?');
+
+  if (rating < 1 || rating > 5) {
+    alert('Rating must be a number between 1 to 5');
+    return;
+  }
+  addBook(title, price, null, rating);
   renderBook();
   showMsg('You successfully added a book');
 }
@@ -82,6 +89,7 @@ function onReadBook(bookId) {
   elBookModal.querySelector(' h2.price').innerText =
     '$' + book.price.toFixed(2);
   elBookModal.querySelector('p.desc').innerText = book.description;
+  elBookModal.querySelector('.rating').innerText = book.rating;
   elBookModal.querySelector('div.book-img img').src = book.imgUrl;
   elBookModal.dataset.bookId = bookId;
   elBookModal.showModal();
@@ -124,11 +132,17 @@ function onAddBookByModal(elForm) {
   const formTitle = elForm.querySelector('[name="book-title"]');
   const formPrice = elForm.querySelector('[name="book-price"]');
   const formImgInput = elForm.querySelector('[name="book-img"]');
+  const formRating = elForm.querySelector('[name="book-rating"]');
 
   if (!formTitle.value || !formPrice.value)
     return alert('Please make sure data are filled correctly!');
 
-  addBook(formTitle.value, +formPrice.value, formImgInput?.value);
+  addBook(
+    formTitle.value,
+    +formPrice.value,
+    formImgInput?.value,
+    +formRating.value
+  );
   renderBook();
   showMsg('Congratulations your book repertoire grew');
   elForm.reset();

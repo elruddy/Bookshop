@@ -73,3 +73,9 @@ function getWord(isUpperCase) {
   if (isUpperCase) word = word.charAt(0).toUpperCase() + word.substring(1);
   return word;
 }
+
+function getRandomIntInclusive(min, max) {
+  const minCeiled = Math.ceil(min);
+  const maxFloored = Math.floor(max);
+  return Math.floor(Math.random() * (maxFloored - minCeiled + 1) + minCeiled);
+}

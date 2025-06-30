@@ -23,6 +23,7 @@
           <tr>
             <th>Title</th>
             <th>Price</th>
+            <th>Rating</th>
             <th>Actions</th>
           </tr>
         </thead>
@@ -39,6 +40,7 @@
           <div class="book-img">
             <p class="desc"></p>
             <img src="" />
+          <h2 class="rating"></h2>
           </div>
 
           <button class="close">✖</button>
@@ -78,6 +80,13 @@
             type="text"
             placeholder="http(s)://.............jpeg"
             autocomplete="off"
+          />
+           <label>Rating</label>:
+          <input 
+            name="book-rating"
+            type="text"
+            placeholder="rating"
+            autocomplete="on"
           />
         </div>
 

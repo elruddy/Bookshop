@@ -24,8 +24,8 @@ function updateBookPrice(bookId, newPrice) {
   _saveBooks();
 }
 
-function addBook(title, price, img) {
-  const newBook = _createBook(title, price, img);
+function addBook(title, price, img, rating) {
+  const newBook = _createBook(title, price, img, rating);
   gBooks.unshift(newBook);
   _saveBooks();
 }
@@ -43,7 +43,7 @@ function getStats() {
   );
 }
 
-function _createBook(title, price, imgUrl) {
+function _createBook(title, price, imgUrl, rating) {
   return {
     id: makeId(),
     title,
@@ -52,6 +52,7 @@ function _createBook(title, price, imgUrl) {
       imgUrl ||
       'https://islandpress.org/sites/default/files/default_book_cover_2015.jpg',
     description: LoremIpsum(30),
+    rating,
   };
 }
 
@@ -65,6 +66,7 @@ function _createBooks() {
       price: 120,
       imgUrl: 'img/tom.jpeg',
       description: LoremIpsum(30),
+      rating: getRandomIntInclusive(1, 5),
     },
     {
       id: makeId(),
@@ -72,6 +74,7 @@ function _createBooks() {
       price: 70,
       imgUrl: 'img/twilight.jpg',
       description: LoremIpsum(30),
+      rating: getRandomIntInclusive(1, 5),
     },
     {
       id: makeId(),
@@ -79,6 +82,7 @@ function _createBooks() {
       price: 100,
       imgUrl: 'img/GonewW.jpeg',
       description: LoremIpsum(30),
+      rating: getRandomIntInclusive(1, 5),
     },
   ];
 }
