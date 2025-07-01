@@ -13,11 +13,35 @@
       <div class="aboveTable">
         <label> Filter:</label>
         <input id='inputFilter' placeholder="Search by Title" oninput="onInputFilter(this.value)"> </input>
+        <label>Min rating:</label>
+
+        <select name="minimum-rating" id="rating" onchange="onRatingSelect(this)">
+          <option value="1">1</option>
+          <option value="2">2</option>
+          <option value="3">3</option>
+          <option value="4">4</option>
+          <option value="5">5</option>
+        </select>
         <button onclick="onClear()"> Clear filter </button>
         
-            <button onclick="onAddBook()">Add by Prompts</button>
-            <button onclick="onGetBookModal()">Add by Modal</button>
+        <button onclick="onAddBook()">Add by Prompts</button>
+        <button onclick="onGetBookModal()">Add by Modal</button>
       </div>
+      <div class="sorting">
+        <label> Sort by:</label>
+        <select name="sort-by" id="sort" onchange="onSortSelect(this)">
+          <option value="-1"></option>
+          <option value="title">title</option>
+          <option value="rating">rating</option>
+          <option value="price">price</option>
+        </select>
+        <input type="radio" id="ascend" onchange="changeSortOrder(true)" name="ascendSort">
+        <label>Ascending</label>
+        <input type="radio" id="descend" checked="true" onchange="changeSortOrder(false)" name="descendSort">
+        <label>Descending</label>
+      </div>
+
+
       <table class="table-container">
         <thead>
           <tr>

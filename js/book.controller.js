@@ -1,17 +1,39 @@
 'use-strict';
 
+var filter = {
+  title: '',
+  minRating: 1,
+};
+
+var sortBy = {
+  value: '-1',
+  ascending: false,
+};
+
 function onInit() {
   renderBook();
 }
 
-function renderBook(filter = '') {
+function renderBook() {
   var tableHtml = '';
   var renderedBooks = getBooks();
 
-  if (filter !== '') {
-    renderedBooks = renderedBooks.filter((book) =>
-      book.title.toLowerCase().includes(filter.toLowerCase())
-    );
+  renderedBooks = renderedBooks.filter(
+    (book) =>
+      book.title.toLowerCase().includes(filter.title.toLowerCase()) &&
+      book.rating >= filter.minRating
+  );
+
+  if (sortBy.value !== '-1') {
+    renderedBooks.sort((book1, book2) => {
+      let returnValue;
+
+      if (typeof book1[sortBy.value] === 'string')
+        returnValue = book1[sortBy.value].localeCompare(book2[sortBy.value]);
+      else returnValue = book1[sortBy.value] - book2[sortBy.value];
+
+      return sortBy.ascending ? returnValue : returnValue * -1;
+    });
   }
 
   for (var book of renderedBooks) {
@@ -95,13 +117,46 @@ function onReadBook(bookId) {
   elBookModal.showModal();
 }
 
-function onInputFilter(filterBy) {
-  renderBook(filterBy);
+function changeSortOrder(isAscending) {
+  sortBy.ascending = isAscending;
+
+  const ascEelement = document.getElementById('ascend');
+  const descEelement = document.getElementById('descend');
+
+  ascEelement.checked = isAscending;
+  descEelement.checked = !isAscending;
+
+  renderBook();
+}
+
+function onSortSelect(element) {
+  sortBy.value = element.value;
+
+  renderBook();
+}
+
+function onRatingSelect(element) {
+  filter.minRating = +element.value;
+  renderBook();
+}
+
+function onInputFilter(titleFilterInput) {
+  filter.title = titleFilterInput;
+  renderBook();
 }
 
 function onClear() {
   const elFilter = document.getElementById('inputFilter');
+  const elRating = document.getElementById('rating');
+
   elFilter.value = '';
+  elRating.selectedIndex = 0;
+
+  filter = {
+    title: '',
+    minRating: 1,
+  };
+
   renderBook();
 }
 
