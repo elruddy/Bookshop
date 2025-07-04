@@ -3,6 +3,7 @@
 var gQueryOptions = {
   filter: { title: '', minRating: 1 },
   sortBy: { value: '-1', ascending: false },
+  layout: '',
 };
 
 function onInit() {
@@ -12,7 +13,6 @@ function onInit() {
 }
 
 function renderBook() {
-  var tableHtml = '';
   var renderedBooks = getBooks();
 
   renderedBooks = renderedBooks.filter(
@@ -39,9 +39,49 @@ function renderBook() {
     });
   }
 
+  if (gQueryOptions.layout === 'table') renderBooksTable(renderedBooks);
+  else renderBooksCards(renderedBooks);
+}
+
+function renderBooksCards(renderedBooks) {
+  if (!renderedBooks.length) {
+    document.getElementById('CardsBody').innerText = 'No books found...';
+    return;
+  }
+
+  var cardsArr = renderedBooks.map(
+    (book) =>
+      `<div class="book-card">
+            <img src="${book.imgUrl}" />
+            <p><strong>Title:</strong> ${book.title}</p>
+            <p><strong>Description:</strong> ${book.description}</p>
+            <div class="actions">
+                <button class="material-symbols-outlined" onclick="onReadBook('${book.id}')" >book_5</button>
+                <button  class="material-symbols-outlined" onclick="onUpdateBook('${book.id}')" >update</button>
+                <button  class="material-symbols-outlined" onclick="onRemoveBook('${book.id}')" >delete</button>
+            </div>
+        </div>`
+  );
+  const insertHtml = cardsArr.join('');
+
+  const ele = document.querySelector('.cards-container');
+  ele.style.display = 'flex';
+  const eleTable = document.querySelector('.table-container');
+  eleTable.style.display = 'none';
+  insertHtmlByElementId('CardsBody', insertHtml);
+}
+
+function renderBooksTable(renderedBooks) {
+  if (!renderedBooks.length) {
+    document.getElementById('TableBody').innerText = 'No books found...';
+    return;
+  }
+
+  var insertHtml = '';
+
   for (var book of renderedBooks) {
-    tableHtml =
-      tableHtml +
+    insertHtml =
+      insertHtml +
       `
         <tr>
             <td>${book.title}</td>
@@ -56,9 +96,11 @@ function renderBook() {
     `;
   }
 
-  if (!tableHtml) tableHtml = 'No books found...';
-  renderStats();
-  insertHtmlByElementId('TableBody', tableHtml);
+  const eleTable = document.querySelector('.table-container');
+  eleTable.style.display = 'table';
+  const ele = document.querySelector('.cards-container');
+  ele.style.display = 'none';
+  insertHtmlByElementId('TableBody', insertHtml);
 }
 
 function onRemoveBook(bookId) {
@@ -195,7 +237,7 @@ function onGetBookModal() {
 function onAddBookByModal(elForm) {
   const formTitle = elForm.querySelector('[name="book-title"]');
   const formPrice = elForm.querySelector('[name="book-price"]');
-  const formImgInput = elForm.querySelector('[name="book-img"]');
+  const formImgInput = elForm.querySelector('[name="book-image"]');
   const formRating = elForm.querySelector('[name="book-rating"]');
 
   if (!formTitle.value || !formPrice.value)
@@ -238,6 +280,7 @@ function renderQueryParams() {
   document.getElementById('rating').value = gQueryOptions.filter.minRating;
   document.getElementById('ascend').checked = gQueryOptions.sortBy.ascending;
   document.getElementById('descend').checked = !gQueryOptions.sortBy.ascending;
+
   document.getElementById('sort').value = gQueryOptions.sortBy.value;
 }
 
@@ -264,4 +307,9 @@ function setQueryParams() {
     queryParams.toString();
 
   window.history.pushState({ path: newUrl }, '', newUrl);
+}
+
+function onSetLayout(txt) {
+  gQueryOptions.layout = txt;
+  renderBook();
 }

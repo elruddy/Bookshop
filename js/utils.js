@@ -15,7 +15,7 @@ function makeId(length = 5) {
   return txt;
 }
 
-function LoremIpsum(wordCount = 100) {
+function LoremIpsum(wordCount = 50) {
   let str = '';
   let isNewSentence = true;
 

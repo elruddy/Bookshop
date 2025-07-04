@@ -1,7 +1,7 @@
 body{
     font-family: 'Courier New', Courier, monospace;
     margin: 0;
-    background-size:contain
+    background-size: calc();
 }
 
 main{
@@ -11,8 +11,9 @@ main{
     align-items: center;
 }
 .table-container{
+    display: table;
     margin-top: 8px;
-    width: 50vw;
+    width: 75vw;
     background: hsl(147, 50%, 47%);
 }
 
@@ -42,8 +43,33 @@ button {
 
 .aboveTable {
     background-color: hsla(0, 100%, 100%, 0.9);
-     width: 50vw;
-     font-weight: bold;
+    width: 75vw;
+    font-weight: bold;
+    display: flex;
+    padding-top: 5px;
+    gap:25px
+}
+
+.sorting{
+    background-color: hsla(0, 100%, 100%, 0.9);
+    display: flex;
+    justify-content: end;
+    gap: 20px;
+    width: 75vw;
+    font-weight: bold;
+    text-align: center;
+    padding-top: 5px;
+
+}
+
+.sorting button {
+    background: hsl(147, 50%, 47%);
+    border: 0px;
+    width: 60px;
+}
+#sort{
+    width: 100px;
+    line-height: normal;
 }
 
 .aboveTable button {
@@ -122,7 +148,7 @@ border: 0;
 }
 
 .stats{
-    position: absolute;
+    position: fixed;
     width: 100%;
     bottom: 0;
     display: flex;
@@ -131,4 +157,55 @@ border: 0;
     background-color: hsl(300, 76%, 72%);
     color: white;
     font-weight: bold;
+}
+
+.cards-container {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    padding: 10px 0px;
+    gap: 15px;
+    min-width: 790px;
+}
+
+
+.book-card {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+    max-width: 250px;
+    height: 450px;
+    background-color:hsla(42, 98%, 53%, 0.952);
+    border-radius: 10px;
+    padding: 10px;    
+}
+
+.book-card button {
+        background-color: white;
+        border:solid 0px;
+    }
+
+.book-card img {
+    width: 40%;
+    height: 30%
+}
+
+
+.book-card p {
+    display: block;
+    text-overflow: ellipsis;
+    word-wrap: break-word;
+    overflow: hidden;
+    max-height: 3.6em;
+    line-height: 1.8em;
+}
+
+.material-symbols-outlined {
+  font-variation-settings:
+  'FILL' 0,
+  'wght' 300,
+  'GRAD' 0,
+  'opsz' 24
 }

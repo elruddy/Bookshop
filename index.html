@@ -5,11 +5,13 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="css/bookshop-css.css" />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+
     <title>Bookshop</title>
   </head>
   <body onload="onInit()"  style="background-image: url('img/books_background.jpg');">
-
     <main>
+      
       <div class="aboveTable">
         <label> Filter:</label>
         <input id='inputFilter' placeholder="Search by Title" oninput="onInputFilter(this.value)"> </input>
@@ -37,8 +39,10 @@
         </select>
         <input type="radio" id="ascend" onchange="changeSortOrder(true)" name="ascendSort">
         <label>Ascending</label>
-        <input type="radio" id="descend" onchange="changeSortOrder(false)" name="descendSort">
-        <label>Descending</label>
+        <input type="radio" id="descend" onchange="changeSortOrder(false)" name="descendSort">
+        <label>Descending</label>
+        <button class="material-symbols-outlined" onclick="onSetLayout('table')">table</button>
+        <button class="material-symbols-outlined" onclick="onSetLayout('cards')">dashboard</button>
       </div>
 
 
@@ -53,7 +57,9 @@
         </thead>
         <tbody id="TableBody"></tbody>
       </table>
-      <div class="cards-container hide">bjhvfwvf</div>
+
+
+      <div id="CardsBody" class="cards-container hide">bjhvfwvf</div>
     </main>
 
 

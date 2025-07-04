@@ -70,6 +70,14 @@ function _createBooks() {
     },
     {
       id: makeId(),
+      title: 'Summer',
+      price: 120,
+      imgUrl: 'img/summer.jpg',
+      description: LoremIpsum(30),
+      rating: getRandomIntInclusive(1, 5),
+    },
+    {
+      id: makeId(),
       title: 'Twilight',
       price: 70,
       imgUrl: 'img/twilight.jpg',
@@ -80,7 +88,7 @@ function _createBooks() {
       id: makeId(),
       title: 'Gone with Wind',
       price: 100,
-      imgUrl: 'img/GonewW.jpeg',
+      imgUrl: 'img/GonewW.jpg',
       description: LoremIpsum(30),
       rating: getRandomIntInclusive(1, 5),
     },
