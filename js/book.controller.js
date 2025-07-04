@@ -1,17 +1,14 @@
 'use-strict';
 
-var filter = {
-  title: '',
-  minRating: 1,
-};
-
-var sortBy = {
-  value: '-1',
-  ascending: false,
+var gQueryOptions = {
+  filter: { title: '', minRating: 1 },
+  sortBy: { value: '-1', ascending: false },
 };
 
 function onInit() {
   renderBook();
+  readQueryParams();
+  setQueryParams();
 }
 
 function renderBook() {
@@ -20,19 +17,25 @@ function renderBook() {
 
   renderedBooks = renderedBooks.filter(
     (book) =>
-      book.title.toLowerCase().includes(filter.title.toLowerCase()) &&
-      book.rating >= filter.minRating
+      book.title
+        .toLowerCase()
+        .includes(gQueryOptions.filter.title.toLowerCase()) &&
+      book.rating >= gQueryOptions.filter.minRating
   );
 
-  if (sortBy.value !== '-1') {
+  if (gQueryOptions.sortBy.value !== '-1') {
     renderedBooks.sort((book1, book2) => {
       let returnValue;
 
-      if (typeof book1[sortBy.value] === 'string')
-        returnValue = book1[sortBy.value].localeCompare(book2[sortBy.value]);
-      else returnValue = book1[sortBy.value] - book2[sortBy.value];
+      if (typeof book1[gQueryOptions.sortBy.value] === 'string')
+        returnValue = book1[gQueryOptions.sortBy.value].localeCompare(
+          book2[gQueryOptions.sortBy.value]
+        );
+      else
+        returnValue =
+          book1[gQueryOptions.sortBy.value] - book2[gQueryOptions.sortBy.value];
 
-      return sortBy.ascending ? returnValue : returnValue * -1;
+      return gQueryOptions.sortBy.ascending ? returnValue : returnValue * -1;
     });
   }
 
@@ -118,7 +121,8 @@ function onReadBook(bookId) {
 }
 
 function changeSortOrder(isAscending) {
-  sortBy.ascending = isAscending;
+  gQueryOptions.sortBy.ascending = isAscending;
+  setQueryParams();
 
   const ascEelement = document.getElementById('ascend');
   const descEelement = document.getElementById('descend');
@@ -130,18 +134,22 @@ function changeSortOrder(isAscending) {
 }
 
 function onSortSelect(element) {
-  sortBy.value = element.value;
+  gQueryOptions.sortBy.value = element.value;
+  setQueryParams();
 
   renderBook();
 }
 
 function onRatingSelect(element) {
-  filter.minRating = +element.value;
+  gQueryOptions.filter.minRating = +element.value;
+  setQueryParams();
+
   renderBook();
 }
 
 function onInputFilter(titleFilterInput) {
-  filter.title = titleFilterInput;
+  gQueryOptions.filter.title = titleFilterInput;
+  setQueryParams();
   renderBook();
 }
 
@@ -152,11 +160,12 @@ function onClear() {
   elFilter.value = '';
   elRating.selectedIndex = 0;
 
-  filter = {
+  gQueryOptions.filter = {
     title: '',
     minRating: 1,
   };
 
+  setQueryParams();
   renderBook();
 }
 
@@ -206,4 +215,53 @@ function onAddBookByModal(elForm) {
 function onCloseBookModal() {
   const elModal = document.querySelector('.bookAddModal');
   elModal.close();
+}
+
+function readQueryParams() {
+  const queryParams = new URLSearchParams(window.location.search);
+
+  gQueryOptions.filter = {
+    title: queryParams.get('title') || '',
+    minRating: +queryParams.get('minRating') || 1,
+  };
+
+  gQueryOptions.sortBy = {
+    value: queryParams.get('sortValue') || '-1',
+    ascending: queryParams.get('sortAsc') === 'true',
+  };
+
+  renderQueryParams();
+}
+
+function renderQueryParams() {
+  document.getElementById('inputFilter').value = gQueryOptions.filter.title;
+  document.getElementById('rating').value = gQueryOptions.filter.minRating;
+  document.getElementById('ascend').checked = gQueryOptions.sortBy.ascending;
+  document.getElementById('descend').checked = !gQueryOptions.sortBy.ascending;
+  document.getElementById('sort').value = gQueryOptions.sortBy.value;
+}
+
+function setQueryParams() {
+  const queryParams = new URLSearchParams();
+
+  if (gQueryOptions.filter.title)
+    queryParams.set('title', gQueryOptions.filter.title);
+
+  queryParams.set('minRating', gQueryOptions.filter.minRating);
+
+  if (gQueryOptions.sortBy.value !== '-1') {
+    queryParams.set('sortValue', gQueryOptions.sortBy.value);
+  }
+
+  queryParams.set('sortAsc', gQueryOptions.sortBy.ascending);
+
+  const newUrl =
+    window.location.protocol +
+    '//' +
+    window.location.host +
+    window.location.pathname +
+    '?' +
+    queryParams.toString();
+
+  window.history.pushState({ path: newUrl }, '', newUrl);
 }
