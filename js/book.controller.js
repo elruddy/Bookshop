@@ -3,25 +3,20 @@
 var gQueryOptions = {
   filter: { title: '', minRating: 1 },
   sortBy: { value: '-1', ascending: false },
-  layout: '',
+  layout: 'table',
+  page: { idx: 1, size: 3 },
 };
 
 function onInit() {
-  renderBook();
   readQueryParams();
   setQueryParams();
+  renderBooks();
+  renderStats();
 }
 
-function renderBook() {
-  var renderedBooks = getBooks();
-
-  renderedBooks = renderedBooks.filter(
-    (book) =>
-      book.title
-        .toLowerCase()
-        .includes(gQueryOptions.filter.title.toLowerCase()) &&
-      book.rating >= gQueryOptions.filter.minRating
-  );
+function renderBooks() {
+  var books = getBooks(gQueryOptions.filter, gQueryOptions.page);
+  var renderedBooks = books.books;
 
   if (gQueryOptions.sortBy.value !== '-1') {
     renderedBooks.sort((book1, book2) => {
@@ -41,6 +36,25 @@ function renderBook() {
 
   if (gQueryOptions.layout === 'table') renderBooksTable(renderedBooks);
   else renderBooksCards(renderedBooks);
+
+  renderPagination(books.totalPages);
+}
+
+function renderPagination(totalPages) {
+  var innerHtml = `<div class="page-btn" onclick="prevPage(${totalPages})">Prev</div>`;
+
+  for (var i = 1; i <= totalPages; i++) {
+    innerHtml =
+      innerHtml +
+      `<div id="page-${i}" class="page-number" onclick="changePageTo(${i})">${i}</div>`;
+  }
+
+  innerHtml =
+    innerHtml +
+    `<div class="page-btn" onclick="nextPage(${totalPages})">Next</div>`;
+
+  const container = document.getElementById('pages');
+  container.innerHTML = innerHtml;
 }
 
 function renderBooksCards(renderedBooks) {
@@ -106,7 +120,7 @@ function renderBooksTable(renderedBooks) {
 function onRemoveBook(bookId) {
   confirm('Are you sure you want to delet this book?');
   removeBook(bookId);
-  renderBook();
+  renderBooks();
   showMsg('You successfully removed the book');
 }
 
@@ -119,7 +133,7 @@ function onUpdateBook(bookId) {
   }
 
   updateBookPrice(bookId, price);
-  renderBook();
+  renderBooks();
   showMsg('You successfully updated the book');
 }
 
@@ -145,7 +159,7 @@ function onAddBook() {
     return;
   }
   addBook(title, price, null, rating);
-  renderBook();
+  renderBooks();
   showMsg('You successfully added a book');
 }
 
@@ -172,27 +186,50 @@ function changeSortOrder(isAscending) {
   ascEelement.checked = isAscending;
   descEelement.checked = !isAscending;
 
-  renderBook();
+  renderBooks();
 }
 
 function onSortSelect(element) {
   gQueryOptions.sortBy.value = element.value;
   setQueryParams();
-
-  renderBook();
+  renderBooks();
 }
 
 function onRatingSelect(element) {
   gQueryOptions.filter.minRating = +element.value;
   setQueryParams();
-
-  renderBook();
+  renderBooks();
 }
 
 function onInputFilter(titleFilterInput) {
   gQueryOptions.filter.title = titleFilterInput;
   setQueryParams();
-  renderBook();
+  renderBooks();
+}
+
+function nextPage(totalPages) {
+  if (gQueryOptions.page.idx === totalPages) gQueryOptions.page.idx = 0;
+
+  gQueryOptions.page.idx++;
+
+  setQueryParams();
+  renderBooks();
+}
+
+function prevPage(totalPages) {
+  if (gQueryOptions.page.idx === 1) gQueryOptions.page.idx = totalPages + 1;
+
+  gQueryOptions.page.idx--;
+
+  setQueryParams();
+  renderBooks();
+}
+
+function changePageTo(idx) {
+  gQueryOptions.page.idx = idx;
+
+  setQueryParams();
+  renderBooks();
 }
 
 function onClear() {
@@ -208,7 +245,7 @@ function onClear() {
   };
 
   setQueryParams();
-  renderBook();
+  renderBooks();
 }
 
 function showMsg(msg) {
@@ -230,7 +267,6 @@ function renderStats() {
 
 function onGetBookModal() {
   const elModal = document.querySelector('.bookAddModal');
-  console.log(elModal);
   elModal.showModal();
 }
 
@@ -249,7 +285,7 @@ function onAddBookByModal(elForm) {
     formImgInput?.value,
     +formRating.value
   );
-  renderBook();
+  renderBooks();
   showMsg('Congratulations your book repertoire grew');
   elForm.reset();
 }
@@ -272,6 +308,8 @@ function readQueryParams() {
     ascending: queryParams.get('sortAsc') === 'true',
   };
 
+  gQueryOptions.layout = queryParams.get('layout') || 'table';
+
   renderQueryParams();
 }
 
@@ -280,7 +318,6 @@ function renderQueryParams() {
   document.getElementById('rating').value = gQueryOptions.filter.minRating;
   document.getElementById('ascend').checked = gQueryOptions.sortBy.ascending;
   document.getElementById('descend').checked = !gQueryOptions.sortBy.ascending;
-
   document.getElementById('sort').value = gQueryOptions.sortBy.value;
 }
 
@@ -295,6 +332,8 @@ function setQueryParams() {
   if (gQueryOptions.sortBy.value !== '-1') {
     queryParams.set('sortValue', gQueryOptions.sortBy.value);
   }
+
+  queryParams.set('layout', gQueryOptions.layout);
 
   queryParams.set('sortAsc', gQueryOptions.sortBy.ascending);
 
@@ -311,5 +350,6 @@ function setQueryParams() {
 
 function onSetLayout(txt) {
   gQueryOptions.layout = txt;
-  renderBook();
+  setQueryParams();
+  renderBooks();
 }

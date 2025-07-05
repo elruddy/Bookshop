@@ -159,6 +159,11 @@ border: 0;
     font-weight: bold;
 }
 
+.pages {
+    display: flex;
+    flex-direction: row;
+}
+
 .cards-container {
     display: flex;
     flex-wrap: wrap;
@@ -202,10 +207,42 @@ border: 0;
     line-height: 1.8em;
 }
 
+.pages {
+    gap: 30px;
+    font-size: larger;
+    font-weight: bolder;
+    margin-top: 8px;
+}
+
+.page-btn {
+    background-color: white;
+    width: 50px;
+}
+
+.page-number {
+    background-color: white;
+    width: 15px;
+}
+
+.pages div {
+    border: solid black;
+    height: 20px;
+    text-align: center;
+    padding: 10px;
+    border-radius: 8px;
+}
+
+.pages div:hover {
+    background-color: hsl(199, 85%, 67%);
+    border: solid white;
+    color: white;
+}
+
+
 .material-symbols-outlined {
   font-variation-settings:
   'FILL' 0,
-  'wght' 300,
+  'wght' 300,s
   'GRAD' 0,
   'opsz' 24
 }

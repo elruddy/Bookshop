@@ -3,8 +3,19 @@ const BOOK_KEY = 'bookDatabase';
 var gBooks;
 _createBooks();
 
-function getBooks() {
-  return gBooks;
+function getBooks(filter, pagination) {
+  const filteredBooks = gBooks.filter(
+    (book) =>
+      book.title.toLowerCase().includes(filter.title.toLowerCase()) &&
+      book.rating >= filter.minRating
+  );
+
+  const totalPages = Math.ceil(filteredBooks.length / pagination.size);
+  const startIdx = (pagination.idx - 1) * pagination.size;
+  const endIdx = startIdx + pagination.size;
+  const books = filteredBooks.slice(startIdx, endIdx);
+
+  return { books, totalPages };
 }
 
 function getBookbyId(bookId) {
