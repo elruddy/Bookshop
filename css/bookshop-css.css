@@ -118,7 +118,7 @@ div.book-img img {
     border: 0;
 }
 
-.bookAddModal{
+.bookModal{
     background-color:  hsla(147, 85%, 72%, 0.54);
     font-family: 'Courier New', Courier, monospace;
     color: black;
@@ -126,7 +126,7 @@ div.book-img img {
     width:200px ;
 }
 
-.bookAddModal button{
+.bookModal button{
     font-family: 'Courier New', Courier, monospace;
     font-weight: bold;
     background: hsl(147, 50%, 47%);
@@ -135,7 +135,7 @@ div.book-img img {
     justify-self: center
 }
 
-.bookAddModal input {
+.bookModal input {
         font-family: 'Courier New', Courier, monospace;
 border: 0;
 }

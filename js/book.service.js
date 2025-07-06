@@ -28,9 +28,13 @@ function removeBook(bookId) {
   _saveBooks();
 }
 
-function updateBookPrice(bookId, newPrice) {
+function updateBook(bookId, newTitle, newImgUrl, newPrice, newRating) {
   const book = getBookbyId(bookId);
+
   book.price = newPrice;
+  book.title = newTitle;
+  book.imgUrl = newImgUrl;
+  book.rating = newRating;
 
   _saveBooks();
 }

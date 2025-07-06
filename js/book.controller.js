@@ -7,6 +7,8 @@ var gQueryOptions = {
   page: { idx: 1, size: 3 },
 };
 
+var editedBookId = null;
+
 function onInit() {
   readQueryParams();
   setQueryParams();
@@ -71,7 +73,7 @@ function renderBooksCards(renderedBooks) {
             <p><strong>Description:</strong> ${book.description}</p>
             <div class="actions">
                 <button class="material-symbols-outlined" onclick="onReadBook('${book.id}')" >book_5</button>
-                <button  class="material-symbols-outlined" onclick="onUpdateBook('${book.id}')" >update</button>
+                <button  class="material-symbols-outlined" onclick="onAddOrEditBookModal(null, '${book.id}')" >update</button>
                 <button  class="material-symbols-outlined" onclick="onRemoveBook('${book.id}')" >delete</button>
             </div>
         </div>`
@@ -103,7 +105,7 @@ function renderBooksTable(renderedBooks) {
             <td>${book.rating}</td>
             <td>
                 <button onclick="onReadBook ('${book.id}')">Read</button> 
-                <button onclick="onUpdateBook('${book.id}')">Update</button>
+                <button onclick="onAddOrEditBookModal(null, '${book.id}')">Update</button>
                 <button onclick="onRemoveBook('${book.id}')">Delete</button>
             </td>
         </tr>
@@ -122,19 +124,6 @@ function onRemoveBook(bookId) {
   removeBook(bookId);
   renderBooks();
   showMsg('You successfully removed the book');
-}
-
-function onUpdateBook(bookId) {
-  var price = +prompt('What is the new price?');
-
-  if (Number.isNaN(price)) {
-    alert('Price must be a number');
-    return;
-  }
-
-  updateBookPrice(bookId, price);
-  renderBooks();
-  showMsg('You successfully updated the book');
 }
 
 function onAddBook() {
@@ -265,12 +254,37 @@ function renderStats() {
   elFooter.querySelector('.cheap-count').innerText = myStats.cheap;
 }
 
-function onGetBookModal() {
-  const elModal = document.querySelector('.bookAddModal');
+function onAddOrEditBookModal(action, bookId) {
+  const elModal = document.querySelector('.bookModal');
+  var h3Text = 'Add a book';
+
+  const h3header = document.getElementById('modal-header');
+  const elButton = document.getElementById('modalButton');
   elModal.showModal();
+
+  if (action !== 'add') {
+    h3Text = 'Edit a book';
+
+    editedBookId = bookId;
+    const book = getBookbyId(editedBookId);
+
+    const elForm = document.getElementById('addOrEditBook');
+    const formTitle = elForm.querySelector('[name="book-title"]');
+    const formPrice = elForm.querySelector('[name="book-price"]');
+    const formImgInput = elForm.querySelector('[name="book-image"]');
+    const formRating = elForm.querySelector('[name="book-rating"]');
+
+    formTitle.value = book.title;
+    formPrice.value = book.price;
+    formImgInput.value = book.imgUrl;
+    formRating.value = book.rating;
+  }
+
+  h3header.innerText = h3Text;
+  elButton.innerText = h3Text;
 }
 
-function onAddBookByModal(elForm) {
+function onBookModalSubmit(elForm) {
   const formTitle = elForm.querySelector('[name="book-title"]');
   const formPrice = elForm.querySelector('[name="book-price"]');
   const formImgInput = elForm.querySelector('[name="book-image"]');
@@ -279,19 +293,36 @@ function onAddBookByModal(elForm) {
   if (!formTitle.value || !formPrice.value)
     return alert('Please make sure data are filled correctly!');
 
-  addBook(
-    formTitle.value,
-    +formPrice.value,
-    formImgInput?.value,
-    +formRating.value
-  );
+  if (editedBookId) {
+    updateBook(
+      editedBookId,
+      formTitle.value,
+      formImgInput?.value,
+      +formPrice.value,
+      +formRating.value
+    );
+  } else {
+    addBook(
+      formTitle.value,
+      +formPrice.value,
+      formImgInput?.value,
+      +formRating.value
+    );
+  }
   renderBooks();
-  showMsg('Congratulations your book repertoire grew');
+  showMsg(
+    editedBookId
+      ? 'Edited book sucesfully'
+      : 'Congratulations your book repertoire grew'
+  );
+
+  editedBookId = null;
   elForm.reset();
 }
 
 function onCloseBookModal() {
-  const elModal = document.querySelector('.bookAddModal');
+  const elModal = document.querySelector('.bookModal');
+  editedBookId = null;
   elModal.close();
 }
 

@@ -27,7 +27,7 @@
         <button onclick="onClear()"> Clear filter </button>
         
         <button onclick="onAddBook()">Add by Prompts</button>
-        <button onclick="onGetBookModal()">Add by Modal</button>
+        <button onclick="onAddOrEditBookModal('add', null)">Add by Modal</button>
       </div>
       <div class="sorting">
         <label> Sort by:</label>
@@ -80,9 +80,9 @@
     
       <dialog class="msg-box"></dialog>
 
-       <dialog class="bookAddModal"> 
-        <h3>Add a book</h3>
-        <form method="dialog" onsubmit="onAddBookByModal(this)">
+       <dialog class="bookModal"> 
+        <h3 id="modal-header">Add a book</h3>
+        <form id="addOrEditBook" method="dialog" onsubmit="onBookModalSubmit(this)">
            <div>
           <label>Title</label>:
           <input 
@@ -121,7 +121,7 @@
           />
         </div>
 
-        <button> Add Book</button>
+        <button id="modalButton"> Add Book</button>
          <button type="button" class="close" onclick="onCloseBookModal()">
           ✖
         </button>
